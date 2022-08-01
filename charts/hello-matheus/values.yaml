@@ -10,7 +10,7 @@ service:
 
 ingress:
   enabled: true
-  className: "hello-matheus"
+  className: "nginx"
   hosts:
     - host: hello-matheus.aula.jacexperts.io
       paths:
