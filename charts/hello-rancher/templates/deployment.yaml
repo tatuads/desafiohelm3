@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "hello-matheus.fullname" . }}
+  name: {{ include "hello-rancher.fullname" . }}
   labels:
-    {{- include "hello-matheus.labels" . | nindent 4 }}
+    {{- include "hello-rancher.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
-   replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "hello-matheus.selectorLabels" . | nindent 6 }}
+      {{- include "hello-rancher.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "hello-matheus.selectorLabels" . | nindent 8 }}
+        {{- include "hello-rancher.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "hello-matheus.serviceAccountName" . }}
+      serviceAccountName: {{ include "hello-rancher.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -35,8 +35,8 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.ports.containerPort }}
-              protocol: {{ .Values.ports.protocol }}
+              containerPort: 8080
+              protocol: TCP
           livenessProbe:
             httpGet:
               path: /
